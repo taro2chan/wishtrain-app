@@ -22,7 +22,12 @@
   --radius-sm: 12px;
 
   --sidebar-w: 264px;
+  --content-max: 1120px;
 }
+
+/* =========================
+   Reset / Base
+========================= */
 
 * {
   box-sizing: border-box;
@@ -74,6 +79,10 @@ a:hover {
   text-decoration: none;
 }
 
+/* =========================
+   Mobile-first layout
+========================= */
+
 .site-shell {
   display: block;
   min-height: 100vh;
@@ -99,13 +108,13 @@ a:hover {
 
 .menu-toggle {
   appearance: none;
-  border: 1px solid var(--line);
   width: 42px;
   height: 42px;
+  padding: 0;
+  border: 1px solid var(--line);
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.96);
   box-shadow: var(--shadow-sm);
-  padding: 0;
   cursor: pointer;
 }
 
@@ -139,12 +148,41 @@ a:hover {
 
 .sidebar-inner {
   height: 100%;
+  padding: 14px 12px;
   border: 1px solid var(--line-soft);
   border-radius: 24px;
   background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
   box-shadow: var(--shadow-sm);
-  padding: 14px 12px;
 }
+
+.sidebar-backdrop {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(34, 50, 65, 0.16);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+
+.sidebar-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.main-content {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 16px 14px 28px;
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================
+   Sidebar branding / nav
+========================= */
 
 .brand-block {
   display: flex;
@@ -197,30 +235,9 @@ a:hover {
   box-shadow: inset 0 0 0 1px #e5eef5;
 }
 
-.sidebar-backdrop {
-  display: block;
-  position: fixed;
-  inset: 0;
-  background: rgba(34, 50, 65, 0.16);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 50;
-  transition: opacity 0.22s ease;
-}
-
-.sidebar-backdrop.is-open {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.main-content {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 16px 14px 28px;
-  position: relative;
-  z-index: 1;
-}
+/* =========================
+   Page heading
+========================= */
 
 .page-header {
   margin-bottom: 16px;
@@ -244,6 +261,10 @@ a:hover {
   line-height: 1.7;
 }
 
+/* =========================
+   Cards / panels
+========================= */
+
 .page-card,
 .panel,
 .stat-card {
@@ -256,15 +277,15 @@ a:hover {
 }
 
 .page-card {
+  padding: 18px 14px;
+  margin-bottom: 12px;
   border-radius: var(--radius-xl);
-  padding: 20px 16px;
-  margin-bottom: 16px;
   scroll-margin-top: 80px;
 }
 
 .panel {
-  border-radius: 20px;
   padding: 18px 14px;
+  border-radius: 20px;
 }
 
 .panel-large {
@@ -290,6 +311,10 @@ a:hover {
   line-height: 1.35;
 }
 
+/* =========================
+   Stats / dashboard
+========================= */
+
 .stats-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -298,8 +323,8 @@ a:hover {
 }
 
 .stat-card {
+  padding: 16px;
   border-radius: var(--radius-lg);
-  padding: 16px 16px;
 }
 
 .stat-label {
@@ -322,6 +347,10 @@ a:hover {
   grid-template-columns: 1fr;
   gap: 14px;
 }
+
+/* =========================
+   Pills / badges
+========================= */
 
 .badge,
 .soft-pill,
@@ -387,6 +416,10 @@ a:hover {
   border: 1px solid #e8eef3;
 }
 
+/* =========================
+   Home-specific blocks
+========================= */
+
 .next-rehearsal {
   display: flex;
   flex-direction: column;
@@ -438,6 +471,10 @@ a:hover {
   line-height: 1.75;
 }
 
+/* =========================
+   Target list
+========================= */
+
 .target-list {
   list-style: none;
   margin: 0;
@@ -454,7 +491,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 12px 12px;
+  padding: 12px;
   border-radius: 16px;
   background: linear-gradient(180deg, #fbfdff 0%, #f8fbfd 100%);
   border: 1px solid #e9eff4;
@@ -479,6 +516,10 @@ a:hover {
   flex-wrap: wrap;
   gap: 8px;
 }
+
+/* =========================
+   Forms
+========================= */
 
 .search-form,
 .member-select-form {
@@ -518,11 +559,11 @@ a:hover {
 
 .button {
   appearance: none;
+  padding: 12px 16px;
   border: 1px solid #dce7ee;
+  border-radius: 14px;
   background: linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%);
   color: #476274;
-  border-radius: 14px;
-  padding: 12px 16px;
   font-size: 15px;
   cursor: pointer;
   box-shadow: var(--shadow-sm);
@@ -541,11 +582,11 @@ a:hover {
 }
 
 .selected-member-card {
-  padding: 14px 14px;
+  padding: 14px;
+  margin-bottom: 12px;
   border-radius: 16px;
   background: linear-gradient(180deg, #fafcff 0%, #f6faff 100%);
   border: 1px solid #e5eef5;
-  margin-bottom: 12px;
 }
 
 .selected-member-name {
@@ -564,6 +605,10 @@ a:hover {
   flex-wrap: wrap;
   margin-bottom: 14px;
 }
+
+/* =========================
+   Tables (base)
+========================= */
 
 .table-wrap {
   width: 100%;
@@ -594,15 +639,20 @@ a:hover {
 }
 
 .clean-table td {
-  padding: 14px 14px;
+  padding: 10px 10px;
   font-size: 14px;
   vertical-align: middle;
   white-space: nowrap;
 }
 
 .clean-table tbody tr {
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.92);
   box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.clean-table tbody tr:last-child {
+  border-bottom: none;
 }
 
 .cast-table th,
@@ -611,8 +661,8 @@ a:hover {
 }
 
 .cast-cell {
-  text-align: center;
   min-width: 64px;
+  text-align: center;
 }
 
 .cast-dot {
@@ -626,6 +676,165 @@ a:hover {
   line-height: 1.8;
   color: var(--text-soft);
 }
+
+/* =========================
+   Mobile-only helpers
+========================= */
+
+@media (max-width: 720px) {
+  .mobile-stack-table {
+    width: 100%;
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .mobile-stack-table thead {
+    display: none;
+  }
+
+  .mobile-stack-table tbody {
+    display: block;
+  }
+
+  .mobile-stack-table tr {
+    display: block;
+    margin-bottom: 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--line-soft);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .mobile-stack-table td {
+    display: grid;
+    grid-template-columns: 86px 1fr;
+    gap: 10px;
+    padding: 8px 0;
+    border: none;
+    box-shadow: none;
+    white-space: normal !important;
+  }
+
+  .mobile-stack-table td::before {
+    content: attr(data-label);
+    font-size: 12px;
+    color: var(--text-soft);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+}
+
+/* =========================
+   Cast table abbreviations
+========================= */
+
+.abbr-mobile {
+  display: none;
+}
+
+.abbr-desktop {
+  display: inline;
+}
+
+.cast-table-mobile-fit .abbr-col {
+  text-align: center;
+}
+
+/* =========================
+   Cast table mobile fit
+========================= */
+
+@media (max-width: 720px) {
+  .cast-table-wrap {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .cast-table-mobile-fit {
+    width: 100%;
+    min-width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+
+  .cast-table-mobile-fit th,
+  .cast-table-mobile-fit td {
+    padding: 0;
+    text-align: center;
+    box-shadow: none;
+  }
+
+  .cast-table-mobile-fit thead th {
+    border-bottom: 1px solid var(--line-soft);
+    vertical-align: bottom;
+    background: transparent;
+  }
+
+  .cast-table-mobile-fit .member-col {
+    width: 92px;
+    min-width: 92px;
+    max-width: 92px;
+    padding: 2px 4px 2px 0;
+    text-align: left;
+    font-size: 11px;
+    line-height: 1.05;
+    white-space: normal;
+  }
+
+  .cast-table-mobile-fit .gen-col {
+    width: 28px;
+    min-width: 28px;
+    max-width: 28px;
+    padding: 2px 1px;
+    font-size: 11px;
+    line-height: 1;
+    color: var(--text-soft);
+  }
+
+  .cast-table-mobile-fit .abbr-col {
+    width: calc((100vw - 92px - 28px - 28px) / 8);
+    min-width: 28px;
+    max-width: 44px;
+    padding: 8px 2px;
+  }
+
+  .abbr-desktop {
+    display: none;
+  }
+
+  .abbr-mobile {
+    display: inline;
+    font-size: 10px;
+    line-height: 1.1;
+    color: var(--text-soft);
+    white-space: nowrap;
+  }
+
+  .cast-table-mobile-fit .cast-cell {
+    height: 18px;
+    padding: 0;
+    line-height: 1;
+    vertical-align: middle;
+  }
+
+  .cast-table-mobile-fit .cast-dot {
+    display: inline-block;
+    font-size: 11px;
+    line-height: 1;
+  }
+
+  .cast-table-mobile-fit tbody td {
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 12px;
+  }
+}
+
+/* =========================
+   Tablet+
+========================= */
 
 @media (min-width: 720px) {
   .main-content {
@@ -654,6 +863,20 @@ a:hover {
     justify-content: flex-end;
   }
 }
+
+@media (min-width: 721px) {
+  .abbr-desktop {
+    display: inline;
+  }
+
+  .abbr-mobile {
+    display: none;
+  }
+}
+
+/* =========================
+   Desktop
+========================= */
 
 @media (min-width: 1101px) {
   .mobile-topbar {
@@ -692,7 +915,7 @@ a:hover {
   .main-content {
     display: block !important;
     width: 100% !important;
-    max-width: 1120px !important;
+    max-width: var(--content-max) !important;
     margin: 0 auto !important;
     padding: 34px 40px 44px !important;
   }
@@ -734,153 +957,144 @@ a:hover {
   }
 }
 
-/* =========================================
-   Mobile: numbers / rehearsals をカード化
-========================================= */
-@media (max-width: 720px) {
-
-  /* 見出し行の高さを確保 */
-  .cast-table-mobile-fit thead tr {
-    height: 180px;
-  }
-
-  .cast-table-mobile-fit thead th {
-    position: relative;
-    vertical-align: bottom;
-    border-bottom: 1px solid var(--line-soft);
-  }
-
-  /* 列の幅 */
-  .cast-table-mobile-fit .rot-col {
-    width: 26px;
-    min-width: 26px;
-    max-width: 26px;
-    padding: 0;
-  }
-
-  /* ここが本体 */
-  .cast-table-mobile-fit .rot-label {
-    position: absolute;
-    bottom: 6px;
-    left: 50%;
-    transform: translateX(-50%) rotate(-90deg);
-    transform-origin: bottom left;
-    /* ← これが重要 */
-    white-space: nowrap;
-    font-size: 10px;
-    line-height: 1;
-  }
-
-  /* 本文との余白を作る（これ重要） */
-  .cast-table-mobile-fit tbody tr:first-child td {
-    padding-top: 6px;
-  }
-
-  .cast-table-mobile-fit .cast-cell {
-    height: 38px;
+@media (hover: hover) {
+  .clean-table tbody tr:hover {
+    background: rgba(240, 247, 252, 0.6);
   }
 }
 
 /* =========================
-   出演表：略称で収める
+   全体を出演表基準に圧縮
 ========================= */
 
-.abbr-mobile {
-  display: none;
+/* テキスト */
+body {
+  font-size: 13px;
+  line-height: 1.2;
 }
 
-.abbr-desktop {
-  display: inline;
+/* 見出し */
+.page-title {
+  font-size: 22px;
+  line-height: 1.2;
 }
 
-.cast-table-mobile-fit .abbr-col {
-  text-align: center;
+.page-subtitle {
+  font-size: 12px;
+  line-height: 1.3;
 }
+
+/* カード */
+.page-card,
+.panel {
+  padding: 12px 10px;
+  margin-bottom: 8px;
+  border-radius: 14px;
+}
+
+/* セクション見出し */
+.page-card h2,
+.panel-header h2 {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+/* 統計 */
+.stat-card {
+  padding: 10px;
+}
+
+.stat-value {
+  font-size: 20px;
+}
+
+/* リスト系 */
+.target-item {
+  padding: 8px 8px;
+  gap: 6px;
+}
+
+.target-name {
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+
+/* フォーム */
+.text-input,
+.select-box {
+  padding: 8px 10px;
+  font-size: 14px;
+}
+
+.button {
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+/* テーブル全体 */
+.clean-table th {
+  padding: 6px 6px;
+  font-size: 11px;
+}
+
+.clean-table td {
+  padding: 4px 6px;
+  font-size: 13px;
+  line-height: 1.1;
+}
+
+/* 行の高さを詰める */
+.clean-table tbody tr {
+  height: auto;
+}
+
+/* detail系 */
+.detail-item {
+  padding: 6px 0;
+}
+
+.detail-key {
+  font-size: 11px;
+}
+
+.detail-value {
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+/* バッジ */
+.badge,
+.soft-pill,
+.status-badge,
+.seq-badge {
+  padding: 4px 6px;
+  font-size: 10px;
+}
+
+/* =========================
+   モバイルさらに圧縮
+========================= */
 
 @media (max-width: 720px) {
-  .cast-table-wrap {
-    width: 100%;
-    overflow: hidden;
+
+  body {
+    font-size: 12px;
   }
 
-  .cast-table-mobile-fit {
-    width: 100%;
-    min-width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
+  .page-title {
+    font-size: 20px;
   }
 
-  .cast-table-mobile-fit th,
-  .cast-table-mobile-fit td {
-    padding: 0;
-    text-align: center;
-    box-shadow: none;
+  .page-card,
+  .panel {
+    padding: 10px 8px;
   }
 
-  .cast-table-mobile-fit thead th {
-    border-bottom: 1px solid var(--line-soft);
-    vertical-align: bottom;
-    background: transparent;
+  .clean-table td {
+    padding: 2px 4px;
   }
 
-  .cast-table-mobile-fit .member-col {
-    width: 92px;
-    min-width: 92px;
-    max-width: 92px;
-    text-align: left;
-    padding: 8px 6px 8px 0;
-    font-size: 11px;
-    line-height: 1.2;
-    white-space: normal;
-  }
-
-  .cast-table-mobile-fit .gen-col {
-    width: 28px;
-    min-width: 28px;
-    max-width: 28px;
-    padding: 8px 2px;
-    font-size: 11px;
-    color: var(--text-soft);
-  }
-
-  .cast-table-mobile-fit .abbr-col {
-    width: calc((100vw - 92px - 28px - 28px) / 8);
-    min-width: 28px;
-    max-width: 44px;
-    padding: 8px 2px;
-  }
-
-  .abbr-desktop {
-    display: none;
-  }
-
-  .abbr-mobile {
-    display: inline;
-    font-size: 10px;
-    line-height: 1.1;
-    color: var(--text-soft);
-    white-space: nowrap;
-  }
-
-  .cast-table-mobile-fit .cast-cell {
-    height: 40px;
-    padding: 0;
-    vertical-align: middle;
-  }
-
-  .cast-table-mobile-fit .cast-dot {
-    display: inline-block;
-    font-size: 13px;
-    line-height: 1;
-  }
-}
-
-@media (min-width: 721px) {
-  .abbr-desktop {
-    display: inline;
-  }
-
-  .abbr-mobile {
-    display: none;
+  .target-item {
+    padding: 6px;
   }
 }

@@ -3,27 +3,42 @@ from db import get_db
 from routes.common import STATUS_LABELS, number_type_label
 from routes.home import fetch_dashboard_data
 
+
 def init_app(app):
     @app.route("/overview")
     def overview():
         selected_member_name = request.args.get("member_name", "").strip() or None
-        include_opening = request.args.get("include_opening", "0") == "1"
 
         dashboard = fetch_dashboard_data(selected_member_name)
 
         with get_db() as conn:
             members = conn.execute(
-                "SELECT member_name, dance_name, generation FROM members ORDER BY generation, member_name"
+                """
+                SELECT member_name, dance_name, generation
+                FROM members
+                ORDER BY generation, member_name
+                """
             ).fetchall()
 
             numbers = conn.execute(
-                "SELECT number_id, number_name, team, number_type FROM numbers ORDER BY number_id"
+                """
+                SELECT number_id, number_name, team, number_type
+                FROM numbers
+                ORDER BY number_id
+                """
             ).fetchall()
 
             rehearsals = conn.execute(
                 """
-                SELECT rehearsal_id, rehearsal_date, rehearsal_type, studio,
-                       main_room, main_time, sub_room, sub_time
+                SELECT
+                    rehearsal_id,
+                    rehearsal_date,
+                    rehearsal_type,
+                    studio,
+                    main_room,
+                    main_time,
+                    sub_room,
+                    sub_time
                 FROM rehearsals
                 ORDER BY rehearsal_date
                 """
@@ -33,17 +48,22 @@ def init_app(app):
                 """
                 SELECT number_id, number_name, team, number_type
                 FROM numbers
-                WHERE (? = 1) OR number_type != 'intro'
+                WHERE number_type != 'intro'
                 ORDER BY number_id
-                """,
-                (1 if include_opening else 0,),
+                """
             ).fetchall()
 
             member_numbers = conn.execute(
-                "SELECT member_name, number_id FROM member_numbers"
+                """
+                SELECT member_name, number_id
+                FROM member_numbers
+                """
             ).fetchall()
 
-        member_number_set = {(row["member_name"], row["number_id"]) for row in member_numbers}
+        member_number_set = {
+            (row["member_name"], row["number_id"])
+            for row in member_numbers
+        }
 
         return render_template(
             "overview.html",
@@ -53,7 +73,6 @@ def init_app(app):
             rehearsals=rehearsals,
             cast_numbers=cast_numbers,
             member_number_set=member_number_set,
-            include_opening=include_opening,
             status_labels=STATUS_LABELS,
             number_type_label=number_type_label,
         )

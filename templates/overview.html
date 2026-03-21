@@ -1,0 +1,288 @@
+{% extends "base.html" %}
+
+{% block title %}一覧ビュー | WishTrain{% endblock %}
+{% block page_title %}一覧ビュー{% endblock %}
+{% block page_subtitle %}ホーム・メンバー・ナンバー・リハーサル・出演表を縦につないだページ{% endblock %}
+
+{% block content %}
+
+<div class="page-card" id="home">
+  <h2>ホーム</h2>
+
+  <section class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">メンバー</div>
+      <div class="stat-value">{{ member_count }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">ナンバー</div>
+      <div class="stat-value">{{ number_count }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">リハーサル</div>
+      <div class="stat-value">{{ rehearsal_count }}</div>
+    </div>
+  </section>
+
+  <section class="dashboard-grid">
+    <div class="panel panel-large">
+      <div class="panel-header">
+        <h2>次回リハ</h2>
+        {% if is_all_target %}<span class="badge badge-all">全員対象あり</span>{% endif %}
+      </div>
+      {% if next_rehearsal %}
+      <div class="next-rehearsal">
+        <div class="next-date-row">
+          <div class="next-date">{{ next_rehearsal["rehearsal_date"] }}</div>
+          <div class="next-type">{{ next_rehearsal["rehearsal_type"] or "" }}</div>
+        </div>
+        <div class="detail-list">
+          <div class="detail-item">
+            <div class="detail-key">スタジオ</div>
+            <div class="detail-value">{{ next_rehearsal["studio"] or "—" }}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-key">メイン</div>
+            <div class="detail-value">{{ next_rehearsal["main_room"] or "—" }}{% if next_rehearsal["main_time"] %} / {{
+              next_rehearsal["main_time"] }}{% endif %}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-key">サブ</div>
+            <div class="detail-value">{{ next_rehearsal["sub_room"] or "—" }}{% if next_rehearsal["sub_time"] %} / {{
+              next_rehearsal["sub_time"] }}{% endif %}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-key">備考</div>
+            <div class="detail-value">{{ next_rehearsal["notes"] or "—" }}</div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <p class="empty-text">リハーサルデータがありません。</p>
+      {% endif %}
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <h2>今回動くナンバー</h2>
+      </div>
+      {% if next_targets %}
+      <ul class="target-list">
+        {% for row in next_targets %}
+        <li class="target-item">
+          <div class="target-main">
+            <a class="target-name" href="{{ url_for('number_detail', number_id=row['number_id']) }}">{{
+              row["number_name"] }}</a>
+            <div class="target-meta">
+              <span class="soft-pill">{{ row["team"] or "—" }}</span>
+              <span class="soft-pill">{{ number_type_label(row["number_type"]) }}</span>
+            </div>
+          </div>
+          <div class="target-side">
+            <span class="status-badge status-{{ row['status'] }}">{{ status_labels.get(row["status"], row["status"])
+              }}</span>
+            {% if row["main_seq"] is not none %}<span class="seq-badge">{{ row["main_seq"] }}回目</span>{% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="empty-text">対象ナンバーはまだありません。</p>
+      {% endif %}
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <h2>自分の関係あるナンバー</h2>
+      </div>
+      <form method="get" class="member-select-form">
+        <label for="member_name" class="form-label">メンバーを選択</label>
+        <select name="member_name" id="member_name" class="select-box" onchange="this.form.submit()">
+          <option value="">選択してください</option>
+          {% for m in member_list %}
+          <option value="{{ m['member_name'] }}" {% if selected_member and
+            selected_member['member_name']==m['member_name'] %}selected{% endif %}>
+            {{ m["member_name"] }}{% if m["dance_name"] %}（{{ m["dance_name"] }}）{% endif %}
+          </option>
+          {% endfor %}
+        </select>
+        {% if include_opening %}<input type="hidden" name="include_opening" value="1">{% endif %}
+      </form>
+      {% if selected_member %}
+      <div class="selected-member-card">
+        <div class="selected-member-name">{{ selected_member["member_name"] }}</div>
+        <div class="selected-member-meta">{% if selected_member["dance_name"] %}{{ selected_member["dance_name"] }} / {%
+          endif %}{{ selected_member["generation"] }}代</div>
+      </div>
+      {% if member_related_next %}
+      <ul class="target-list compact">
+        {% for row in member_related_next %}
+        <li class="target-item">
+          <div class="target-main">
+            <a class="target-name" href="{{ url_for('number_detail', number_id=row['number_id']) }}">{{
+              row["number_name"] }}</a>
+          </div>
+          <div class="target-side">
+            <span class="status-badge status-{{ row['status'] }}">{{ status_labels.get(row["status"], row["status"])
+              }}</span>
+            {% if row["main_seq"] is not none %}<span class="seq-badge">{{ row["main_seq"] }}回目</span>{% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="empty-text">次回リハで関係するナンバーはありません。</p>
+      {% endif %}
+      {% else %}
+      <p class="empty-text">メンバーを選ぶと、次回リハで関係するナンバーが表示されます。</p>
+      {% endif %}
+    </div>
+  </section>
+</div>
+
+<div class="page-card" id="members">
+  <h2>メンバー</h2>
+  <div class="table-wrap">
+    <table class="clean-table">
+      <thead>
+        <tr>
+          <th>氏名</th>
+          <th>ダンサーネーム</th>
+          <th>代</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in members %}
+        <tr>
+          <td><a href="{{ url_for('member_detail', member_name=row['member_name']) }}">{{ row["member_name"] }}</a></td>
+          <td>{{ row["dance_name"] or "" }}</td>
+          <td>{{ row["generation"] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="page-card" id="numbers">
+  <h2>ナンバー</h2>
+  <div class="table-wrap">
+    <table class="clean-table">
+      <thead>
+        <tr>
+          <th>ナンバー名</th>
+          <th>チーム</th>
+          <th>種別</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in numbers %}
+        <tr>
+          <td><a href="{{ url_for('number_detail', number_id=row['number_id']) }}">{{ row["number_name"] }}</a></td>
+          <td>{{ row["team"] or "" }}</td>
+          <td>{{ number_type_label(row["number_type"]) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="page-card" id="rehearsals">
+  <h2>リハーサル</h2>
+  <div class="table-wrap">
+    <table class="clean-table">
+      <thead>
+        <tr>
+          <th>日付</th>
+          <th>種類</th>
+          <th>スタジオ</th>
+          <th>メイン</th>
+          <th>サブ</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rehearsals %}
+        <tr>
+          <td><a href="{{ url_for('rehearsal_detail', rehearsal_id=row['rehearsal_id']) }}">{{ row["rehearsal_date"]
+              }}</a></td>
+          <td>{{ row["rehearsal_type"] or "" }}</td>
+          <td>{{ row["studio"] or "" }}</td>
+          <td>{{ row["main_room"] or "" }} {{ row["main_time"] or "" }}</td>
+          <td>{{ row["sub_room"] or "" }} {{ row["sub_time"] or "" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="page-card" id="cast-table">
+  <h2>出演表</h2>
+
+  <form method="get" class="search-form">
+    {% if selected_member %}<input type="hidden" name="member_name" value="{{ selected_member['member_name'] }}">{%
+    endif %}
+    <label class="checkbox-row">
+      <input type="checkbox" name="include_opening" value="1" {% if include_opening %}checked{% endif %}
+        onchange="this.form.submit()">
+      オープニングも表示する
+    </label>
+  </form>
+
+  <div class="cast-table-wrap">
+    <table class="clean-table cast-table cast-table-mobile-fit">
+      <thead>
+        <tr>
+          <th class="member-col">ダンサーネーム</th>
+          <th class="gen-col">代</th>
+
+          {% for number in cast_numbers %}
+          {% set short_name = number["number_name"] %}
+          {% if number["number_name"] == "コンフィデンスマン" %}
+          {% set short_name = "コンフィ" %}
+          {% elif number["number_name"] == "どうにもとまらない" %}
+          {% set short_name = "リンダ" %}
+          {% elif number["number_name"] == "ジプシーキングス（女）" %}
+          {% set short_name = "女ジプ" %}
+          {% elif number["number_name"] == "ジプシーキングス（ペア）" %}
+          {% set short_name = "ペア" %}
+          {% elif number["number_name"] == "ワンオクロック（①コンフィデンスマン）" %}
+          {% set short_name = "ワン①" %}
+          {% elif number["number_name"] == "ワンオクロック（②ジプシーキングス）" %}
+          {% set short_name = "ワン②" %}
+          {% elif number["number_name"] == "ワンオクロック（全員）" %}
+          {% set short_name = "全員" %}
+          {% elif number["number_name"] == "カーテンコール" %}
+          {% set short_name = "カテコ" %}
+          {% endif %}
+
+          <th class="abbr-col" title="{{ number['number_name'] }}">
+            <span class="abbr-desktop">{{ number["number_name"] }}</span>
+            <span class="abbr-mobile">{{ short_name }}</span>
+          </th>
+          {% endfor %}
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for member in members %}
+        <tr>
+          <td class="member-col">{{ member["dance_name"] or member["member_name"] }}</td>
+          <td class="gen-col">{{ member["generation"] }}</td>
+
+          {% for number in cast_numbers %}
+          <td class="cast-cell">
+            {% if (member["member_name"], number["number_id"]) in member_number_set %}
+            <span class="cast-dot">●</span>
+            {% endif %}
+          </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}{{ member["member_name"] }}{% endblock %}
+{% block page_title %}{{ member["member_name"] }}{% endblock %}
+{% block page_subtitle %}メンバー詳細{% endblock %}
+{% block content %}
+<div class="page-card">
+  <div class="info-pills">
+    <span class="soft-pill">ダンサーネーム: {{ member["dance_name"] or "—" }}</span>
+    <span class="soft-pill">{{ member["generation"] }}代</span>
+  </div>
+  <h2>参加ナンバー</h2>
+  <ul class="target-list compact">
+    {% for row in numbers %}
+      <li class="target-item">
+        <div class="target-main">
+          <a class="target-name" href="{{ url_for('number_detail', number_id=row['number_id']) }}">{{ row["number_name"] }}</a>
+          <div class="target-meta">
+            <span class="soft-pill">{{ row["team"] or "—" }}</span>
+            <span class="soft-pill">{{ number_type_label(row["number_type"]) }}</span>
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<div class="page-card">
+  <h2>関係するリハーサル</h2>
+  <div class="table-wrap">
+    <table class="clean-table">
+      <thead><tr><th>日付</th><th>種類</th><th>ナンバー</th><th>状態</th><th>回数</th></tr></thead>
+      <tbody>
+        {% for row in related_rehearsals %}
+        <tr>
+          <td><a href="{{ url_for('rehearsal_detail', rehearsal_id=row['rehearsal_id']) }}">{{ row["rehearsal_date"] }}</a></td>
+          <td>{{ row["rehearsal_type"] or "" }}</td>
+          <td>{{ row["number_name"] }}</td>
+          <td>{{ status_labels.get(row["status"], row["status"]) }}</td>
+          <td>{{ row["main_seq"] if row["main_seq"] is not none else "" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

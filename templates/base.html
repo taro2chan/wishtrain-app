@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}WishTrain{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v='lp1') }}">
+</head>
+
+<body>
+
+  <div class="mobile-topbar">
+    <button class="menu-toggle" id="menuToggle">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mobile-title">WishTrain</div>
+  </div>
+
+  <div class="site-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-inner">
+
+        <div class="brand-block">
+          <div class="brand-mark">WT</div>
+          <div>
+            <div class="brand-title">WishTrain</div>
+            <div class="brand-subtitle">Overview</div>
+          </div>
+        </div>
+
+        <!-- 🔽 ナビを全部アンカーに変更 -->
+        <nav class="main-nav">
+          <a href="/overview#home" class="nav-link">ホーム</a>
+          <a href="/overview#members" class="nav-link">メンバー</a>
+          <a href="/overview#numbers" class="nav-link">ナンバー</a>
+          <a href="/overview#rehearsals" class="nav-link">リハーサル</a>
+          <a href="/overview#cast-table" class="nav-link">出演表</a>
+        </nav>
+
+      </div>
+    </aside>
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <main class="main-content">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const sidebar = document.getElementById("sidebar");
+    const backdrop = document.getElementById("sidebarBackdrop");
+
+    menuToggle?.addEventListener("click", () => {
+      sidebar.classList.toggle("is-open");
+      backdrop.classList.toggle("is-open");
+    });
+
+    backdrop?.addEventListener("click", () => {
+      sidebar.classList.remove("is-open");
+      backdrop.classList.remove("is-open");
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 1100) {
+        sidebar.classList.remove("is-open");
+        backdrop.classList.remove("is-open");
+      }
+    });
+  </script>
+
+</body>
+
+</html>

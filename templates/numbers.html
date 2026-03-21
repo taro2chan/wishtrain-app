@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}ナンバー{% endblock %}
+{% block page_title %}ナンバー{% endblock %}
+{% block page_subtitle %}ナンバー一覧{% endblock %}
+
+{% block content %}
+<div class="page-card">
+  <div class="table-wrap">
+    <table class="clean-table mobile-stack-table">
+      <thead>
+        <tr>
+          <th>ナンバー名</th>
+          <th>チーム</th>
+          <th>種別</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          <td data-label="ナンバー名">
+            <a href="{{ url_for('number_detail', number_id=row['number_id']) }}">
+              {{ row["number_name"] }}
+            </a>
+          </td>
+          <td data-label="チーム">{{ row["team"] or "" }}</td>
+          <td data-label="種別">{{ number_type_label(row["number_type"]) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

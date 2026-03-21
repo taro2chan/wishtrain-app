@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}ホーム | WishTrain Control Panel{% endblock %}
+{% block page_title %}コントロールパネル{% endblock %}
+{% block page_subtitle %}次回リハと、関係するナンバーをすばやく確認するためのホーム画面{% endblock %}
+{% block content %}
+<section class="stats-grid">
+  <div class="stat-card"><div class="stat-label">メンバー</div><div class="stat-value">{{ member_count }}</div></div>
+  <div class="stat-card"><div class="stat-label">ナンバー</div><div class="stat-value">{{ number_count }}</div></div>
+  <div class="stat-card"><div class="stat-label">リハーサル</div><div class="stat-value">{{ rehearsal_count }}</div></div>
+</section>
+
+<section class="dashboard-grid">
+  <div class="panel panel-large">
+    <div class="panel-header">
+      <h2>次回リハ</h2>
+      {% if is_all_target %}<span class="badge badge-all">全員対象あり</span>{% endif %}
+    </div>
+    {% if next_rehearsal %}
+      <div class="next-rehearsal">
+        <div class="next-date-row">
+          <div class="next-date">{{ next_rehearsal["rehearsal_date"] }}</div>
+          <div class="next-type">{{ next_rehearsal["rehearsal_type"] or "" }}</div>
+        </div>
+        <div class="detail-list">
+          <div class="detail-item"><div class="detail-key">スタジオ</div><div class="detail-value">{{ next_rehearsal["studio"] or "—" }}</div></div>
+          <div class="detail-item"><div class="detail-key">メイン</div><div class="detail-value">{{ next_rehearsal["main_room"] or "—" }}{% if next_rehearsal["main_time"] %} / {{ next_rehearsal["main_time"] }}{% endif %}</div></div>
+          <div class="detail-item"><div class="detail-key">サブ</div><div class="detail-value">{{ next_rehearsal["sub_room"] or "—" }}{% if next_rehearsal["sub_time"] %} / {{ next_rehearsal["sub_time"] }}{% endif %}</div></div>
+          <div class="detail-item"><div class="detail-key">備考</div><div class="detail-value">{{ next_rehearsal["notes"] or "—" }}</div></div>
+        </div>
+        <div class="panel-footer-link"><a href="{{ url_for('rehearsal_detail', rehearsal_id=next_rehearsal['rehearsal_id']) }}">詳細を見る</a></div>
+      </div>
+    {% else %}
+      <p class="empty-text">リハーサルデータがありません。</p>
+    {% endif %}
+  </div>
+
+  <div class="panel">
+    <div class="panel-header"><h2>今回動くナンバー</h2></div>
+    {% if next_targets %}
+      <ul class="target-list">
+        {% for row in next_targets %}
+          <li class="target-item">
+            <div class="target-main">
+              <a class="target-name" href="{{ url_for('number_detail', number_id=row['number_id']) }}">{{ row["number_name"] }}</a>
+              <div class="target-meta">
+                <span class="soft-pill">{{ row["team"] or "—" }}</span>
+                <span class="soft-pill">{{ number_type_label(row["number_type"]) }}</span>
+              </div>
+            </div>
+            <div class="target-side">
+              <span class="status-badge status-{{ row['status'] }}">{{ status_labels.get(row["status"], row["status"]) }}</span>
+              {% if row["main_seq"] is not none %}<span class="seq-badge">{{ row["main_seq"] }}回目</span>{% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="empty-text">対象ナンバーはまだありません。</p>
+    {% endif %}
+  </div>
+
+  <div class="panel">
+    <div class="panel-header"><h2>自分の関係あるナンバー</h2></div>
+    <form method="get" class="member-select-form">
+      <label for="member_name" class="form-label">メンバーを選択</label>
+      <select name="member_name" id="member_name" class="select-box" onchange="this.form.submit()">
+        <option value="">選択してください</option>
+        {% for m in member_list %}
+          <option value="{{ m['member_name'] }}" {% if selected_member and selected_member['member_name'] == m['member_name'] %}selected{% endif %}>
+            {{ m["member_name"] }}{% if m["dance_name"] %}（{{ m["dance_name"] }}）{% endif %}
+          </option>
+        {% endfor %}
+      </select>
+    </form>
+    {% if selected_member %}
+      <div class="selected-member-card">
+        <div class="selected-member-name">{{ selected_member["member_name"] }}</div>
+        <div class="selected-member-meta">{% if selected_member["dance_name"] %}{{ selected_member["dance_name"] }} / {% endif %}{{ selected_member["generation"] }}代</div>
+      </div>
+      {% if member_related_next %}
+        <ul class="target-list compact">
+          {% for row in member_related_next %}
+            <li class="target-item">
+              <div class="target-main">
+                <a class="target-name" href="{{ url_for('number_detail', number_id=row['number_id']) }}">{{ row["number_name"] }}</a>
+              </div>
+              <div class="target-side">
+                <span class="status-badge status-{{ row['status'] }}">{{ status_labels.get(row["status"], row["status"]) }}</span>
+                {% if row["main_seq"] is not none %}<span class="seq-badge">{{ row["main_seq"] }}回目</span>{% endif %}
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="empty-text">次回リハで関係するナンバーはありません。</p>
+      {% endif %}
+    {% else %}
+      <p class="empty-text">メンバーを選ぶと、次回リハで関係するナンバーが表示されます。</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

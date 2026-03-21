@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}出演表{% endblock %}
+{% block page_title %}出演表{% endblock %}
+{% block page_subtitle %}誰がどのナンバーに出るかを一覧で確認{% endblock %}
+
+{% block content %}
+<div class="page-card">
+  <form method="get" class="search-form">
+    <label class="checkbox-row">
+      <input type="checkbox" name="include_opening" value="1" {% if include_opening %}checked{% endif %}
+        onchange="this.form.submit()">
+      オープニングも表示する
+    </label>
+  </form>
+
+  <div class="cast-table-wrap">
+    <table class="clean-table cast-table cast-table-mobile-fit">
+      <thead>
+        <tr>
+          <th class="member-col">氏名</th>
+          <th class="dance-col">ダンサーネーム</th>
+          <th class="gen-col">代</th>
+          {% for number in numbers %}
+          <th class="rot-col">
+            <span class="rot-label">{{ number["number_name"] }}</span>
+          </th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for member in members %}
+        <tr>
+          <td class="member-col">{{ member["member_name"] }}</td>
+          <td class="dance-col">{{ member["dance_name"] or "" }}</td>
+          <td class="gen-col">{{ member["generation"] }}</td>
+          {% for number in numbers %}
+          <td class="cast-cell">
+            {% if (member["member_name"], number["number_id"]) in member_number_set %}
+            <span class="cast-dot">●</span>
+            {% endif %}
+          </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

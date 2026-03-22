@@ -1,0 +1,260 @@
+/* =========================
+   Cast table abbreviations
+========================= */
+
+.abbr-mobile {
+  display: none;
+}
+
+.abbr-desktop {
+  display: inline;
+}
+
+.cast-table-mobile-fit .abbr-col {
+  text-align: center;
+}
+
+.cast-table th,
+.cast-table td {
+  white-space: nowrap;
+}
+
+.cast-cell {
+  min-width: 64px;
+  text-align: center;
+}
+
+.cast-dot {
+  color: #4f7fa8;
+  font-weight: 700;
+}
+
+/* =========================
+   Cast table mobile fit
+========================= */
+
+@media (max-width: 720px) {
+  .cast-table-wrap {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .cast-table-mobile-fit {
+    width: 100%;
+    min-width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+
+  .cast-table-mobile-fit th,
+  .cast-table-mobile-fit td {
+    padding: 0;
+    text-align: center;
+    box-shadow: none;
+  }
+
+  .cast-table-mobile-fit thead th {
+    border-bottom: 1px solid var(--line-soft);
+    vertical-align: bottom;
+    background: transparent;
+  }
+
+  .cast-table-mobile-fit .member-col {
+    width: 92px;
+    min-width: 92px;
+    max-width: 92px;
+    padding: 2px 4px 2px 0;
+    text-align: left;
+    font-size: 11px;
+    line-height: 1.05;
+    white-space: normal;
+  }
+
+  .cast-table-mobile-fit .gen-col {
+    width: 28px;
+    min-width: 28px;
+    max-width: 28px;
+    padding: 2px 1px;
+    font-size: 11px;
+    line-height: 1;
+    color: var(--text-soft);
+  }
+
+  .cast-table-mobile-fit .abbr-col {
+    width: calc((100vw - 92px - 28px - 28px) / 8);
+    min-width: 28px;
+    max-width: 44px;
+    padding: 8px 2px;
+  }
+
+  .abbr-desktop {
+    display: none;
+  }
+
+  .abbr-mobile {
+    display: inline;
+    font-size: 10px;
+    line-height: 1.1;
+    color: var(--text-soft);
+    white-space: nowrap;
+  }
+
+  .cast-table-mobile-fit .cast-cell {
+    height: 18px;
+    padding: 0;
+    line-height: 1;
+    vertical-align: middle;
+  }
+
+  .cast-table-mobile-fit .cast-dot {
+    display: inline-block;
+    font-size: 11px;
+    line-height: 1;
+  }
+
+  .cast-table-mobile-fit tbody td {
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 721px) {
+  .abbr-desktop {
+    display: inline;
+  }
+
+  .abbr-mobile {
+    display: none;
+  }
+}
+
+/* =========================
+   出演表（縦書き）
+========================= */
+
+.cast-table-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+
+.cast-table-mobile-fit {
+  width: 100%;
+  min-width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.cast-table-mobile-fit th,
+.cast-table-mobile-fit td {
+  padding: 0;
+  text-align: center;
+  box-shadow: none;
+}
+
+.cast-table-mobile-fit thead th {
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: bottom;
+  background: transparent;
+}
+
+/* 代は最小限 */
+.cast-table-mobile-fit .gen-col {
+  width: 3.2rem;
+  min-width: 3.2rem;
+  max-width: 3.2rem;
+  padding: 0 4px 8px 4px;
+  font-size: 12px;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--text);
+  text-align: left;
+}
+
+/* なまえも必要幅だけ */
+.cast-table-mobile-fit .member-col {
+  width: 6.2rem;
+  min-width: 6.2rem;
+  max-width: 6.2rem;
+  padding: 0 6px 8px 0;
+  text-align: left;
+  font-size: 12px;
+  line-height: 1.05;
+  white-space: normal;
+  word-break: keep-all;
+}
+
+/* 曲列が残りを均等に使う */
+.cast-table-mobile-fit .rot-col,
+.cast-table-mobile-fit .cast-cell {
+  width: auto;
+}
+
+.cast-table-mobile-fit .rot-col {
+  height: 150px;
+  padding: 0 0 8px 0;
+  vertical-align: bottom;
+}
+
+.cast-table-mobile-fit .rot-label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  display: inline-block;
+  font-size: 11px;
+  line-height: 1.1;
+  color: #555;
+  white-space: nowrap;
+}
+
+/* 本文 */
+.cast-table-mobile-fit tbody td {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.cast-table-mobile-fit .cast-cell {
+  height: 18px;
+  vertical-align: middle;
+}
+
+.cast-table-mobile-fit .cast-dot {
+  color: #000;
+  font-size: 11px;
+  line-height: 1;
+}
+
+/* スマホでは少しだけ詰める */
+@media (max-width: 720px) {
+  .cast-table-mobile-fit .gen-col {
+    width: 2.8rem;
+    min-width: 2.8rem;
+    max-width: 2.8rem;
+    font-size: 11px;
+  }
+
+  .cast-table-mobile-fit .member-col {
+    width: 5.4rem;
+    min-width: 5.4rem;
+    max-width: 5.4rem;
+    font-size: 11px;
+  }
+
+  .cast-table-mobile-fit .rot-col {
+    height: 138px;
+  }
+
+  .cast-table-mobile-fit .rot-label {
+    font-size: 10px;
+  }
+
+  .cast-table-mobile-fit .cast-dot {
+    font-size: 10px;
+  }
+}
+
+@media (min-width: 1101px) {
+  .cast-table th,
+  .cast-table td {
+    white-space: nowrap;
+  }
+}

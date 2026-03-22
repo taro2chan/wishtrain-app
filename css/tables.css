@@ -1,0 +1,119 @@
+/* =========================
+   Tables (base)
+========================= */
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.wide-table-wrap {
+  width: 100%;
+}
+
+.clean-table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.clean-table th {
+  padding: 12px 14px;
+  text-align: left;
+  font-size: 12px;
+  color: var(--text-soft);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.clean-table td {
+  padding: 10px 10px;
+  font-size: 14px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.clean-table tbody tr {
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.clean-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+/* =========================
+   Mobile-only helpers
+========================= */
+
+@media (max-width: 720px) {
+  .mobile-stack-table {
+    width: 100%;
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .mobile-stack-table thead {
+    display: none;
+  }
+
+  .mobile-stack-table tbody {
+    display: block;
+  }
+
+  .mobile-stack-table tr {
+    display: block;
+    margin-bottom: 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--line-soft);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .mobile-stack-table td {
+    display: grid;
+    grid-template-columns: 86px 1fr;
+    gap: 10px;
+    padding: 8px 0;
+    border: none;
+    box-shadow: none;
+    white-space: normal !important;
+  }
+
+  .mobile-stack-table td::before {
+    content: attr(data-label);
+    font-size: 12px;
+    color: var(--text-soft);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+}
+
+@media (min-width: 1101px) {
+  .table-wrap {
+    max-width: none;
+  }
+
+  .clean-table {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .clean-table td,
+  .clean-table th {
+    white-space: normal;
+  }
+}
+
+@media (hover: hover) {
+  .clean-table tbody tr:hover {
+    background: rgba(240, 247, 252, 0.6);
+  }
+}

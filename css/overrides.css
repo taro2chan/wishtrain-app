@@ -9,14 +9,74 @@ a:hover {
   text-decoration: underline;
 }
 
-/* 円筒余白 */
+/* =========================
+   Main content
+   上下に十分な余白を確保して、
+   fixed フェード帯から実コンテンツを逃がす
+========================= */
 
 .main-content {
-  padding: 80px 16px;
+  padding: 120px 16px 140px;
+}
+
+/* 上端フェード */
+body::before {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 88px;
+  pointer-events: none;
+  z-index: 20;
+  background: linear-gradient(to bottom,
+      rgba(248, 251, 253, 1) 0%,
+      rgba(248, 251, 253, 0.96) 20%,
+      rgba(248, 251, 253, 0.78) 48%,
+      rgba(248, 251, 253, 0.38) 74%,
+      rgba(248, 251, 253, 0) 100%);
+}
+
+/* 下端フェード */
+body::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  pointer-events: none;
+  z-index: 20;
+  background: linear-gradient(to top,
+      rgba(248, 251, 253, 1) 0%,
+      rgba(248, 251, 253, 0.96) 18%,
+      rgba(248, 251, 253, 0.80) 42%,
+      rgba(248, 251, 253, 0.42) 70%,
+      rgba(248, 251, 253, 0) 100%);
 }
 
 @media (max-width: 720px) {
   .main-content {
-    padding: 60px 12px;
+    padding: 110px 12px 130px;
+  }
+
+  body::before {
+    height: 80px;
+    background: linear-gradient(to bottom,
+        rgba(248, 251, 253, 1) 0%,
+        rgba(248, 251, 253, 0.96) 20%,
+        rgba(248, 251, 253, 0.80) 48%,
+        rgba(248, 251, 253, 0.42) 74%,
+        rgba(248, 251, 253, 0) 100%);
+  }
+
+  body::after {
+    height: 110px;
+    background: linear-gradient(to top,
+        rgba(248, 251, 253, 1) 0%,
+        rgba(248, 251, 253, 0.96) 18%,
+        rgba(248, 251, 253, 0.82) 42%,
+        rgba(248, 251, 253, 0.46) 70%,
+        rgba(248, 251, 253, 0) 100%);
   }
 }

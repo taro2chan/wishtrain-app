@@ -7,7 +7,6 @@
 .clean-table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: auto;
 }
 
 .clean-table th,
@@ -38,20 +37,28 @@
   border-bottom: none;
 }
 
-.center-cell {
-  text-align: center;
-}
+/* ===== 出演表 ===== */
 
-/* 出演表は横スクロール可 */
 .cast-table {
+  table-layout: auto;
   width: max-content;
   min-width: 100%;
 }
 
-/* 縦見出しは共通部品 */
-.clean-table th:has(.vertical-head) {
-  height: 10.5em;
-  width: 1.6em;
+/* 左2列は最小限 */
+.cast-table .col-gen,
+.cast-table .col-name {
+  width: max-content;
+}
+
+/* 曲列は残り均等 */
+.cast-table .col-number {
+  width: auto;
+}
+
+/* 縦見出し */
+.number-head {
+  height: 10em;
   padding-right: 0;
   text-align: center;
   vertical-align: bottom;
@@ -63,6 +70,12 @@
   text-orientation: mixed;
   white-space: nowrap;
   line-height: 1;
+}
+
+/* 中央寄せ */
+.center-cell {
+  text-align: center;
+  vertical-align: middle;
 }
 
 @media (hover: hover) {
@@ -78,8 +91,7 @@
     padding: 8px 10px 8px 0;
   }
 
-  .clean-table th:has(.vertical-head) {
-    height: 9.5em;
-    width: 1.4em;
+  .number-head {
+    height: 9em;
   }
 }

@@ -20,7 +20,6 @@
 
             <div class="table-wrap">
                 <table class="clean-table">
-
                     <thead>
                         <tr>
                             <th>代</th>
@@ -28,7 +27,6 @@
                             <th>氏名</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         <?php foreach ($members as $m): ?>
                         <tr>
@@ -45,7 +43,6 @@
                         <?php
 endforeach; ?>
                     </tbody>
-
                 </table>
             </div>
         </div>
@@ -56,14 +53,12 @@ endforeach; ?>
 
             <div class="table-wrap">
                 <table class="clean-table">
-
                     <thead>
                         <tr>
                             <th>ナンバー名</th>
                             <th>チーム</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         <?php foreach ($numbers as $n): ?>
                         <tr>
@@ -77,7 +72,6 @@ endforeach; ?>
                         <?php
 endforeach; ?>
                     </tbody>
-
                 </table>
             </div>
         </div>
@@ -87,8 +81,7 @@ endforeach; ?>
             <h2>リハーサル</h2>
 
             <div class="table-wrap">
-                <table class="clean-table rehearsal-table">
-
+                <table class="clean-table">
                     <thead>
                         <tr>
                             <th>日付</th>
@@ -137,7 +130,6 @@ endforeach; ?>
                             <td>
                                 <?php
     $mainNumbers = [];
-
     if (!empty($r['numbers'])) {
         foreach ($r['numbers'] as $n) {
             if (($n['status'] ?? '') === 'main' || ($n['status'] ?? '') === 'all') {
@@ -153,6 +145,7 @@ endforeach; ?>
                                 <?php
     endforeach; ?>
                             </td>
+
                         </tr>
                         <?php
 endforeach; ?>
@@ -169,14 +162,25 @@ endforeach; ?>
             <div class="table-wrap">
                 <table class="clean-table cast-table">
 
+                    <colgroup>
+                        <col class="col-gen">
+                        <col class="col-name">
+                        <?php foreach ($castNumbers as $n): ?>
+                        <col class="col-number">
+                        <?php
+endforeach; ?>
+                    </colgroup>
+
                     <thead>
                         <tr>
                             <th>代</th>
                             <th>なまえ</th>
                             <?php foreach ($castNumbers as $n): ?>
-                            <th><span class="vertical-head">
+                            <th class="number-head">
+                                <span class="vertical-head">
                                     <?= h($n['number_name'])?>
-                                </span></th>
+                                </span>
+                            </th>
                             <?php
 endforeach; ?>
                         </tr>
@@ -210,7 +214,6 @@ endforeach; ?>
         </div>
 
     </div>
-
 </body>
 
 </html>

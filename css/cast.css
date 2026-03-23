@@ -12,6 +12,7 @@
 .cast-table td {
   text-align: left;
   vertical-align: top;
+  white-space: nowrap;
   font-size: inherit;
   line-height: inherit;
 }
@@ -31,6 +32,7 @@
 
 .cast-table .cast-dot {
   line-height: 1;
+  font-size: inherit;
 }
 
 .cast-table .rot-col {

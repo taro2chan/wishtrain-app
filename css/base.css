@@ -62,7 +62,8 @@ h2 {
     --font-heading-1: 24px;
     --font-heading-2: 20px;
 
-    --font-table: 18px;
+    /* --font-table: 18px; */
+    --font-table: 12px;
     --font-table-head: 14px;
   }
 }

@@ -112,32 +112,35 @@ endforeach; ?>
                             <td>
                                 <?= h($r['rehearsal_date'])?>
                             </td>
-                            <?php
+
+                            <td>
+                                <?php
     $typeMap = [
         '通常WS' => '通常WS',
         '上島JAZZ WS形式' => 'WS形式',
         '7/4イベントリハーサル' => 'リハ',
         '全体練習' => '全体練習',
     ];
-
     $type = $r['rehearsal_type'];
     $displayType = $typeMap[$type] ?? $type;
 ?>
-
-                            <td>
                                 <?= h($displayType)?>
                             </td>
+
                             <td>
                                 <?= h($r['studio'])?>
                             </td>
+
                             <td>
                                 <?= h($r['main_room'])?>
                                 <?= h($r['main_time'])?>
                             </td>
+
                             <td>
                                 <?= h($r['sub_room'])?>
                                 <?= h($r['sub_time'])?>
                             </td>
+
                             <td>
                                 <?php
     $mainNumbers = [];
@@ -161,6 +164,7 @@ endforeach; ?>
                                 <?php
     endif; ?>
                             </td>
+
                         </tr>
                         <?php
 endforeach; ?>

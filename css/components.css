@@ -1,14 +1,41 @@
+/* =========================
+   カード（各セクションの箱）
+========================= */
+
 .page-card {
-  background: var(--panel);
-  padding: 16px;
-  margin-bottom: 14px;
-  border-radius: 14px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px 16px;
+  margin-bottom: 20px;
+
+  border: 1px solid #e6edf2;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
-.page-title {
-  font-weight: 700;
+/* 見出し */
+
+.page-card h2 {
+  margin: 0 0 14px;
+  font-size: var(--font-heading-2);
+  font-weight: 600;
 }
 
-.empty-text {
-  color: var(--text-soft);
+/* =========================
+   テーブル周りの余白
+========================= */
+
+.page-card .table-wrap {
+  margin-top: 6px;
+}
+
+/* =========================
+   モバイル
+========================= */
+
+@media (max-width: 720px) {
+  .page-card {
+    padding: 16px 12px;
+    margin-bottom: 18px;
+    border-radius: 14px;
+  }
 }

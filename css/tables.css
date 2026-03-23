@@ -1,86 +1,72 @@
-.table-wrap,
-.cast-table-wrap {
+.table-wrap {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-.clean-table,
-.cast-table {
+.clean-table {
   width: 100%;
   border-collapse: collapse;
   table-layout: auto;
 }
 
-/* =========================
-   表の文字サイズはここだけで決める
-========================= */
-
 .clean-table th,
-.clean-table td,
-.cast-table th,
-.cast-table td,
-.cast-table .gen-col,
-.cast-table .member-col,
-.cast-table .cast-cell,
-.cast-table .rot-label,
-.cast-table .cast-dot {
-  font-size: var(--font-table) !important;
-  line-height: 1.6 !important;
-}
-
-/* 見出しだけ一段小さく */
-.clean-table th,
-.cast-table th,
-.cast-table .rot-label {
-  font-size: var(--font-table-head) !important;
-  line-height: 1.4 !important;
-  color: var(--text-soft);
-  font-weight: 600;
-}
-
-/* セルの共通見た目 */
-.clean-table th,
-.clean-table td,
-.cast-table th,
-.cast-table td {
+.clean-table td {
   padding: 10px 14px 10px 0;
   text-align: left;
   vertical-align: top;
   white-space: nowrap;
 }
 
-.clean-table tbody tr,
-.cast-table tbody tr {
+.clean-table td {
+  font-size: var(--font-table);
+  line-height: 1.6;
+}
+
+.clean-table th {
+  font-size: var(--font-table-head);
+  line-height: 1.4;
+  color: var(--text-soft);
+  font-weight: 600;
+}
+
+.clean-table tbody tr {
   border-bottom: 1px solid var(--line-soft);
 }
 
-.clean-table tbody tr:last-child,
-.cast-table tbody tr:last-child {
+.clean-table tbody tr:last-child {
   border-bottom: none;
 }
 
-/* 出演表の配置だけ残す */
-.cast-table .cast-cell {
+.center-cell {
   text-align: center;
-  vertical-align: middle;
 }
 
-.cast-table .rot-col {
+/* 出演表は横スクロール可 */
+.cast-table {
+  width: max-content;
+  min-width: 100%;
+}
+
+/* 縦見出しは共通部品 */
+.clean-table th:has(.vertical-head) {
+  height: 10.5em;
+  width: 1.6em;
+  padding-right: 0;
+  text-align: center;
   vertical-align: bottom;
-  text-align: center;
 }
 
-.cast-table .rot-label {
+.vertical-head {
+  display: inline-block;
   writing-mode: vertical-rl;
   text-orientation: mixed;
   white-space: nowrap;
-  display: inline-block;
+  line-height: 1;
 }
 
 @media (hover: hover) {
-
-  .clean-table tbody tr:hover,
-  .cast-table tbody tr:hover {
+  .clean-table tbody tr:hover {
     background: rgba(240, 247, 252, 0.45);
   }
 }
@@ -88,9 +74,12 @@
 @media (max-width: 720px) {
 
   .clean-table th,
-  .clean-table td,
-  .cast-table th,
-  .cast-table td {
+  .clean-table td {
     padding: 8px 10px 8px 0;
+  }
+
+  .clean-table th:has(.vertical-head) {
+    height: 9.5em;
+    width: 1.4em;
   }
 }

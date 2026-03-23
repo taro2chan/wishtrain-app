@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WishTrain</title>
+    <title>WishTrain2026</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -12,7 +12,7 @@
 
     <div class="main-content">
 
-        <h1>WishTrain</h1>
+        <h1>WishTrain2026</h1>
 
         <!-- メンバー -->
         <div class="page-card">
@@ -48,7 +48,6 @@ endforeach; ?>
 
                 </table>
             </div>
-
         </div>
 
         <!-- ナンバー -->
@@ -62,7 +61,6 @@ endforeach; ?>
                         <tr>
                             <th>ナンバー名</th>
                             <th>チーム</th>
-                            <th>種別</th>
                         </tr>
                     </thead>
 
@@ -75,9 +73,6 @@ endforeach; ?>
                             <td>
                                 <?= h($n['team'])?>
                             </td>
-                            <td>
-                                <?= h($n['number_type'])?>
-                            </td>
                         </tr>
                         <?php
 endforeach; ?>
@@ -85,7 +80,6 @@ endforeach; ?>
 
                 </table>
             </div>
-
         </div>
 
         <!-- リハーサル -->
@@ -120,6 +114,7 @@ endforeach; ?>
         '上島JAZZ WS形式' => 'WS形式',
         '7/4イベントリハーサル' => 'リハ',
         '全体練習' => '全体練習',
+        '7/4イベント当日' => '当日',
     ];
     $type = $r['rehearsal_type'];
     $displayType = $typeMap[$type] ?? $type;
@@ -130,12 +125,10 @@ endforeach; ?>
                             <td>
                                 <?= h($r['studio'])?>
                             </td>
-
                             <td>
                                 <?= h($r['main_room'])?>
                                 <?= h($r['main_time'])?>
                             </td>
-
                             <td>
                                 <?= h($r['sub_room'])?>
                                 <?= h($r['sub_time'])?>
@@ -153,18 +146,13 @@ endforeach; ?>
         }
     }
 ?>
-
-                                <?php if (!empty($mainNumbers)): ?>
                                 <?php foreach ($mainNumbers as $name): ?>
                                 <div>
                                     <?= h($name)?>
                                 </div>
                                 <?php
-        endforeach; ?>
-                                <?php
-    endif; ?>
+    endforeach; ?>
                             </td>
-
                         </tr>
                         <?php
 endforeach; ?>
@@ -172,47 +160,42 @@ endforeach; ?>
 
                 </table>
             </div>
-
         </div>
 
         <!-- 出演表 -->
         <div class="page-card">
             <h2>出演表</h2>
 
-            <div class="cast-table-wrap">
-                <table class="clean-table cast-table cast-table-mobile-fit">
+            <div class="table-wrap">
+                <table class="clean-table cast-table">
 
                     <thead>
                         <tr>
-                            <th class="gen-col">代</th>
-                            <th class="member-col">なまえ</th>
-
+                            <th>代</th>
+                            <th>なまえ</th>
                             <?php foreach ($castNumbers as $n): ?>
-                            <th class="rot-col">
-                                <div class="rot-label">
+                            <th><span class="vertical-head">
                                     <?= h($n['number_name'])?>
-                                </div>
-                            </th>
+                                </span></th>
                             <?php
 endforeach; ?>
-
                         </tr>
                     </thead>
 
                     <tbody>
                         <?php foreach ($members as $m): ?>
                         <tr>
-                            <td class="gen-col">
+                            <td>
                                 <?= h($m['generation'])?>代
                             </td>
-                            <td class="member-col">
+                            <td>
                                 <?= h($m['dance_name'])?>
                             </td>
 
                             <?php foreach ($castNumbers as $n): ?>
                             <?php $key = $m['member_name'] . '||' . $n['number_id']; ?>
-                            <td class="cast-cell">
-                                <?= isset($memberNumberSet[$key]) ? '<span class="cast-dot">●</span>' : ''?>
+                            <td class="center-cell">
+                                <?= isset($memberNumberSet[$key]) ? '●' : ''?>
                             </td>
                             <?php
     endforeach; ?>
@@ -224,7 +207,6 @@ endforeach; ?>
 
                 </table>
             </div>
-
         </div>
 
     </div>

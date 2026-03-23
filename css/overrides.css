@@ -1,212 +1,22 @@
-/* =========================
-   全体を出演表基準に圧縮
-========================= */
-
-/* テキスト */
-body {
-  font-size: 13px;
-  line-height: 1.2;
-}
-
-/* 見出し */
-.page-title {
-  font-size: 22px;
-  line-height: 1.2;
-}
-
-.page-subtitle {
-  font-size: 12px;
-  line-height: 1.3;
-}
-
-/* カード */
-.page-card,
-.panel {
-  padding: 12px 10px;
-  margin-bottom: 8px;
-  border-radius: 14px;
-}
-
-/* セクション見出し */
-.page-card h2,
-.panel-header h2 {
-  font-size: 14px;
-  margin-bottom: 8px;
-}
-
-/* 統計 */
-.stat-card {
-  padding: 10px;
-}
-
-.stat-value {
-  font-size: 20px;
-}
-
-/* リスト系 */
-.target-item {
-  padding: 8px 8px;
-  gap: 6px;
-}
-
-.target-name {
-  font-size: 13px;
-  margin-bottom: 2px;
-}
-
-/* フォーム */
-.text-input,
-.select-box {
-  padding: 8px 10px;
-  font-size: 14px;
-}
-
-.button {
-  padding: 8px 10px;
-  font-size: 13px;
-}
-
-/* テーブル全体 */
-.clean-table th {
-  padding: 6px 6px;
-  font-size: 11px;
-}
-
-.clean-table td {
-  padding: 4px 6px;
-  font-size: 13px;
-  line-height: 1.1;
-}
-
-/* 行の高さを詰める */
-.clean-table tbody tr {
-  height: auto;
-}
-
-/* detail系 */
-.detail-item {
-  padding: 6px 0;
-}
-
-.detail-key {
-  font-size: 11px;
-}
-
-.detail-value {
-  font-size: 13px;
-  line-height: 1.3;
-}
-
-/* バッジ */
-.badge,
-.soft-pill,
-.status-badge,
-.seq-badge {
-  padding: 4px 6px;
-  font-size: 10px;
-}
-
-/* =========================
-   モバイルさらに圧縮
-========================= */
-
-@media (max-width: 720px) {
-  body {
-    font-size: 12px;
-  }
-
-  .page-title {
-    font-size: 20px;
-  }
-
-  .page-card,
-  .panel {
-    padding: 10px 8px;
-  }
-
-  .clean-table td {
-    padding: 2px 4px;
-  }
-
-  .target-item {
-    padding: 6px;
-  }
-}
-
-/* =========================
-   モノトーン化（ium系）
-========================= */
+/* 色だけ調整 */
 
 a {
   color: var(--text);
   text-decoration: none;
-  font-weight: 600;
 }
 
 a:hover {
   text-decoration: underline;
 }
 
-.cast-dot {
-  color: #000;
-}
-
-.badge,
-.soft-pill,
-.status-badge,
-.seq-badge {
-  background: #fff;
-  border: 1px solid #ddd;
-  color: #333;
-}
-
-.target-name,
-.selected-member-name {
-  font-weight: 700;
-  color: #000;
-}
-
-.page-subtitle,
-.detail-key,
-.text-soft {
-  color: #888;
-}
-
-/* =========================
-   円筒フェード対応の上下余白
-========================= */
+/* 円筒余白 */
 
 .main-content {
-  padding-top: 80px;
-  padding-bottom: 80px;
+  padding: 80px 16px;
 }
 
 @media (max-width: 720px) {
   .main-content {
-    padding-top: 60px;
-    padding-bottom: 60px;
+    padding: 60px 12px;
   }
-}
-
-.cast-table-mobile-fit .abbr-mobile {
-  display: inline-block;
-  font-size: 10px;
-  line-height: 1.05;
-  color: var(--text-soft);
-  white-space: normal;
-  text-align: center;
-}
-
-.cast-table-mobile-fit .abbr-col {
-  vertical-align: bottom;
-}
-
-.cast-table-mobile-fit .abbr-col.odd {
-  padding-top: 6px;
-  padding-bottom: 2px;
-}
-
-.cast-table-mobile-fit .abbr-col.even {
-  padding-top: 2px;
-  padding-bottom: 6px;
 }
